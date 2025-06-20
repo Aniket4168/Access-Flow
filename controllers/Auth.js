@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const OTP = require("../models/OTP");
-const Profile = require("../models/Profile");
 const bcrypt = require("bcrypt");
 const otpGenerator = require("otp-generator");
 const jwt = require("jsonwebtoken");
@@ -148,14 +147,7 @@ exports.signUp = async (req, res) => {
 
         //create entry in db
 
-        //create an empty profile kyuki user me additional details is required
-        //and abhi wo nahi hai, to null se initialize kardo
-        const profileDetails = await Profile.create({
-            gender:null,
-            dateOfBirth: null,
-            about:null,
-            contactNumber: null,
-        });
+        
 
         const user = await User.create({
             firstName, 
@@ -165,7 +157,6 @@ exports.signUp = async (req, res) => {
             password:hashedPass,
             accountType,
             approved:approved,
-            additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
 
         });
